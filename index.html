@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rock Paper Scissors</title>
-  </head>
-  <body>
-	<script>
+</head>
+
+<body>
+
+    <h1> What is your move? </h1>
+    <div id="container">
+        <button id="1">Rock</button>
+        <button id="2">Paper</button>
+        <button id="3">Scissors</button>
+    </div>
+
+    <h3>SCORE</h3>
+    <b>Computer:</b>
+    <p id="computer">0</p>
+    <b>User:</b>
+    <p id="user">0</p>
+
+    <script>
 
         // 1 = rock
         // 2 = paper
@@ -16,63 +32,90 @@
         game();
 
         function game() {
-            for (let i = 0; i < 5; i++) {
-                let player = prompt("What is your move?").toLowerCase();
 
-                console.log("Raw input: " + player);
-
-                let playerChanged;
-
-                if(player === "rock") {
-                    playerChanged = 1;
-                }
-                else if(player === "paper") {
-                    playerChanged = 2;
-                }
-                else if(player === "scissors") {
-                    playerChanged = 3;
-                }
-                else {
-                    playerChanged = 4;
-                }
-
-                console.log("Modified input: " + playerChanged);
-
-                console.log(playRound(playerChanged, getComputerChoice()));
-            }
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    //alert(button.id);
+                    console.log(playRound(button.id, getComputerChoice()));
+                });
+            });
         }
 
         function playRound(playerSelection, computerSelection) {
 
-            console.log("playerSelection: " + playerSelection)
-            console.log("computerSelection: " + computerSelection)
+            //console.log("playerSelection: " + playerSelection)
+            //console.log("computerSelection: " + computerSelection)
 
-            if(playerSelection == computerSelection) {
+            if (playerSelection == computerSelection) {
                 return "DRAW";
             }
 
-            if(playerSelection == 1 && computerSelection == 2) {
+            if (playerSelection == 1 && computerSelection == 2) {
+                score(1);
                 return "You Lose! Paper beats Rock";
             }
 
-            if(playerSelection == 1 && computerSelection == 3) {
+            if (playerSelection == 1 && computerSelection == 3) {
+                score(2);
                 return "You Win! Rock beats Paper";
             }
 
-            if(playerSelection == 2 && computerSelection == 1) {
+            if (playerSelection == 2 && computerSelection == 1) {
+                score(2);
                 return "You Win! Paper beats Rock";
             }
 
-            if(playerSelection == 2 && computerSelection == 3) {
-                return "You Lost! Scissors beats Rock";
+            if (playerSelection == 2 && computerSelection == 3) {
+                score(1);
+                return "You Lose! Scissors beats Rock";
             }
 
-            if(playerSelection == 3 && computerSelection == 1) {
-                return "You Lost! Rock beats Scissors";
+            if (playerSelection == 3 && computerSelection == 1) {
+                score(1);
+                return "You Lose! Rock beats Scissors";
             }
 
-            if(playerSelection == 3 && computerSelection == 2) {
+            if (playerSelection == 3 && computerSelection == 2) {
+                score(2);
                 return "You Win! Scissors beats Paper";
+            }
+        }
+
+        function score(winner) {
+            // 1 is computer
+            // 2 is user
+
+            if (winner == 1) {
+                var computerScore = document.getElementById('computer');
+                var number = computerScore.innerHTML;
+                number++;
+                computerScore.innerHTML = number;
+                isOver();
+            }
+
+            else if (winner == 2) {
+                var userScore = document.getElementById('user');
+                var number = userScore.innerHTML;
+                number++;
+                userScore.innerHTML = number;
+                isOver();
+            }
+        }
+
+        function isOver() {
+
+            var computerScore = document.getElementById('computer');
+            var computerNumber = computerScore.innerHTML;
+            var userScore = document.getElementById('user');
+            var userNumber = userScore.innerHTML;
+
+            if (computerNumber >= 5) {
+                alert("Game Over! Computer wins.");
+            }
+            
+            else if (userNumber >= 5) {
+                alert("Game Over! You win");
             }
         }
 
@@ -82,5 +125,6 @@
         }
 
     </script>
-  </body>
+</body>
+
 </html>
